@@ -16,12 +16,17 @@
             <div class="game-clock" id="game-clock">10:00</div>
         </div>
 
-        <!-- Middle Section: Team Names -->
+        <!-- Middle Section: Team Names + Shot Clock -->
         <div class="names-section">
             <div class="team-name home" id="home-team-name">
                 HOME
                 <div class="possession-arrow" id="home-possession-arrow"></div>
             </div>
+
+            <div class="shot-clock-wrapper">
+                <div class="shot-clock" id="shot-clock">24</div>
+            </div>
+
             <div class="team-name away" id="away-team-name">
                 GUEST
                 <div class="possession-arrow" id="away-possession-arrow"></div>
@@ -65,17 +70,10 @@
 
         <!-- Hidden elements to preserve JS functionality without errors -->
         <div style="display: none;">
-            <div id="shot-clock">24</div>
             <div id="home-timeouts">2</div>
             <div id="away-timeouts">2</div>
             <div id="controls-info"></div>
         </div>
-    </div>
-
-    <div class="session-banner">
-        <span id="active-match-label">Match 1</span>
-        <span id="active-user-label">View only</span>
-        <span id="sync-status-label">Online</span>
     </div>
 
     <!-- Login Modal -->
@@ -218,7 +216,7 @@
                 <h3>Shot Clock</h3>
                 <div class="input-group">
                     <label for="shot-clock-input">Seconds:</label>
-                    <input type="number" id="shot-clock-input" min="0" max="99" placeholder="24">
+                    <input type="number" id="shot-clock-input" min="0" max="99" placeholder="12">
                 </div>
             </div>
 
@@ -249,7 +247,7 @@
                 </div>
                 <div class="input-group">
                     <label for="default-shot-clock">Default Shot Clock:</label>
-                    <input type="number" id="default-shot-clock" min="1" max="99" placeholder="24">
+                    <input type="number" id="default-shot-clock" min="1" max="99" placeholder="12">
                 </div>
                 <div class="input-group">
                     <label for="default-timeouts">Default Timeouts:</label>

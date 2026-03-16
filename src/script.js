@@ -701,7 +701,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function resetShotClock(time = 24) {
+    function resetShotClock(time = 12) {
         return requireAuth(() => {
             scoreboardState.shotClockSeconds = time;
             if (shotClockEl) {
@@ -999,7 +999,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 void startShotClock();
             }
         } else if (event.button === 0) {
-            resetShotClock(24);
+            resetShotClock(12);
         } else if (event.button === 1) {
             event.preventDefault();
             resetShotClock(14);
@@ -1036,7 +1036,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 void startShotClock();
             }
         } else if (event.code === 'KeyR' && !event.shiftKey) {
-            resetShotClock(24);
+            resetShotClock(12);
         } else if (event.code === 'KeyR' && event.shiftKey) {
             resetShotClock(14);
         } else if (event.code === 'ArrowUp') {
