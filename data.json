@@ -1,0 +1,74 @@
+{
+    "users": {
+      "2HGXgQAcnUTDkDB5qCRcKnSNYWm1": {
+        "email": "sasanka@gmail.com",
+        "isActive": true,
+        "assignedMatchId": "match1"
+      },
+      "PbcEaDzs6OTAALq7ZZGFYyIdixW2": {
+        "email": "test@emial.com",
+        "isActive": true,
+        "assignedMatchId": "match2"
+      }
+    },
+    "matches": {
+      "match1": {
+        "scoreboardState": {
+          "homeScore": 0,
+          "awayScore": 0,
+          "homeFouls": 0,
+          "awayFouls": 0,
+          "homeTimeouts": 0,
+          "awayTimeouts": 0,
+          "homeTeamName": "Team A",
+          "awayTeamName": "Team B",
+          "quarter": 1,
+          "gameMinutes": 10,
+          "gameSeconds": 0,
+          "gameMilliseconds": 0,
+          "shotClockSeconds": 12,
+          "isGameClockRunning": false,
+          "isShotClockRunning": false,
+          "ballPossession": "home",
+          "defaultGameMinutes": 10,
+          "defaultShotClock": 12,
+          "defaultTimeouts": 2,
+          "defaultQuarter": 1,
+          "defaultHomeTeam": "Team A",
+          "defaultAwayTeam": "Team B",
+          "meta": {
+            "matchId": "match1"
+          }
+        }
+      },
+      "match2": {
+        "scoreboardState": {
+          "homeScore": 0,
+          "awayScore": 0,
+          "homeFouls": 0,
+          "awayFouls": 0,
+          "homeTimeouts": 0,
+          "awayTimeouts": 0,
+          "homeTeamName": "Team C",
+          "awayTeamName": "Team D",
+          "quarter": 1,
+          "gameMinutes": 10,
+          "gameSeconds": 0,
+          "gameMilliseconds": 0,
+          "shotClockSeconds": 12,
+          "isGameClockRunning": false,
+          "isShotClockRunning": false,
+          "ballPossession": "home",
+          "defaultGameMinutes": 10,
+          "defaultShotClock": 12,
+          "defaultTimeouts": 2,
+          "defaultQuarter": 1,
+          "defaultHomeTeam": "Team C",
+          "defaultAwayTeam": "Team D",
+          "meta": {
+            "matchId": "match2"
+          }
+        }
+      }
+    }
+  }
