@@ -101,6 +101,35 @@ function normalizeScoreboardState(rawState, matchId = DEFAULT_MATCH_ID) {
     return mergedState;
 }
 
+function exportPublicScoreboardState(state, matchId = DEFAULT_MATCH_ID) {
+    const normalizedState = normalizeScoreboardState(state, matchId);
+
+    return {
+        awayFouls: normalizedState.awayFouls,
+        awayScore: normalizedState.awayScore,
+        awayTeamName: normalizedState.awayTeamName,
+        awayTimeouts: normalizedState.awayTimeouts,
+        ballPossession: normalizedState.ballPossession,
+        defaultAwayTeam: normalizedState.defaultAwayTeam,
+        defaultGameMinutes: normalizedState.defaultGameMinutes,
+        defaultHomeTeam: normalizedState.defaultHomeTeam,
+        defaultQuarter: normalizedState.defaultQuarter,
+        defaultShotClock: normalizedState.defaultShotClock,
+        defaultTimeouts: normalizedState.defaultTimeouts,
+        gameMilliseconds: normalizedState.gameMilliseconds,
+        gameMinutes: normalizedState.gameMinutes,
+        gameSeconds: normalizedState.gameSeconds,
+        homeFouls: normalizedState.homeFouls,
+        homeScore: normalizedState.homeScore,
+        homeTeamName: normalizedState.homeTeamName,
+        homeTimeouts: normalizedState.homeTimeouts,
+        isGameClockRunning: normalizedState.isGameClockRunning,
+        isShotClockRunning: normalizedState.isShotClockRunning,
+        quarter: normalizedState.quarter,
+        shotClockSeconds: normalizedState.shotClockSeconds
+    };
+}
+
 function stampState(state, matchId, updatedBy) {
     const normalizedState = normalizeScoreboardState(state, matchId);
     normalizedState.meta = {
@@ -234,6 +263,7 @@ export {
     clearCachedAssignedProfile,
     clearPendingSync,
     createDefaultScoreboardState,
+    exportPublicScoreboardState,
     getMatchLabel,
     getRequestedMatchId,
     markPendingSync,
