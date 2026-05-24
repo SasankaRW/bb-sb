@@ -12,8 +12,10 @@ import {
 import {
     MATCH_IDS,
     buildMatchScopedUrl,
+    buildLiveScoreboardPath,
     buildMatchStatePath,
     buildUserProfilePath,
+    exportPublicScoreboardState,
     cacheAssignedProfile,
     cacheMatchState,
     clearCachedAssignedProfile,
@@ -280,7 +282,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            await set(stateRef, stampedState);
+            const liveStateRef = ref(db, buildLiveScoreboardPath(activeMatchId));
+            await Promise.all([
+                set(stateRef, stampedState),
+                set(liveStateRef, exportPublicScoreboardState(stampedState, activeMatchId))
+            ]);
             clearPendingSync(activeMatchId);
         } catch (error) {
             console.error('Realtime sync failed, caching changes locally.', error);
@@ -303,7 +309,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const stampedState = buildStampedState(pendingSync.state);
-            await set(stateRef, stampedState);
+            const liveStateRef = ref(db, buildLiveScoreboardPath(activeMatchId));
+            await Promise.all([
+                set(stateRef, stampedState),
+                set(liveStateRef, exportPublicScoreboardState(stampedState, activeMatchId))
+            ]);
             clearPendingSync(activeMatchId);
             setLocalScoreboardState(stampedState);
             showLoginStatus(`Synced ${getMatchLabel(activeMatchId)} successfully.`, 'success');

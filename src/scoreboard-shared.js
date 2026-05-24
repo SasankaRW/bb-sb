@@ -151,6 +151,10 @@ function buildMatchStatePath(matchId) {
     return `matches/${normalizeMatchId(matchId)}/scoreboardState`;
 }
 
+function buildLiveScoreboardPath(matchId) {
+    return `matches/${normalizeMatchId(matchId)}/liveScoreboard`;
+}
+
 function buildUserProfilePath(uid) {
     return `users/${uid}`;
 }
@@ -256,6 +260,7 @@ export {
     DEFAULT_MATCH_ID,
     MATCH_IDS,
     buildMatchScopedUrl,
+    buildLiveScoreboardPath,
     buildMatchStatePath,
     buildUserProfilePath,
     cacheAssignedProfile,

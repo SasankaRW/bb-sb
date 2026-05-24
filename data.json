@@ -39,6 +39,30 @@
           "meta": {
             "matchId": "match1"
           }
+        },
+        "liveScoreboard": {
+          "homeScore": 0,
+          "awayScore": 0,
+          "homeFouls": 0,
+          "awayFouls": 0,
+          "homeTimeouts": 0,
+          "awayTimeouts": 0,
+          "homeTeamName": "Team A",
+          "awayTeamName": "Team B",
+          "quarter": 1,
+          "gameMinutes": 10,
+          "gameSeconds": 0,
+          "gameMilliseconds": 0,
+          "shotClockSeconds": 12,
+          "isGameClockRunning": false,
+          "isShotClockRunning": false,
+          "ballPossession": "home",
+          "defaultGameMinutes": 10,
+          "defaultShotClock": 12,
+          "defaultTimeouts": 2,
+          "defaultQuarter": 1,
+          "defaultHomeTeam": "Team A",
+          "defaultAwayTeam": "Team B"
         }
       },
       "match2": {
@@ -68,6 +92,30 @@
           "meta": {
             "matchId": "match2"
           }
+        },
+        "liveScoreboard": {
+          "homeScore": 0,
+          "awayScore": 0,
+          "homeFouls": 0,
+          "awayFouls": 0,
+          "homeTimeouts": 0,
+          "awayTimeouts": 0,
+          "homeTeamName": "Team C",
+          "awayTeamName": "Team D",
+          "quarter": 1,
+          "gameMinutes": 10,
+          "gameSeconds": 0,
+          "gameMilliseconds": 0,
+          "shotClockSeconds": 12,
+          "isGameClockRunning": false,
+          "isShotClockRunning": false,
+          "ballPossession": "home",
+          "defaultGameMinutes": 10,
+          "defaultShotClock": 12,
+          "defaultTimeouts": 2,
+          "defaultQuarter": 1,
+          "defaultHomeTeam": "Team C",
+          "defaultAwayTeam": "Team D"
         }
       }
     }

@@ -6,25 +6,16 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "rewrites": [
+    "redirects": [
       {
         "source": "/scoreboardState.json",
-        "destination": "/scoreboardState.json.html"
-      }
-    ],
-    "headers": [
+        "destination": "https://bb-scoreboardnew-default-rtdb.asia-southeast1.firebasedatabase.app/matches/match1/liveScoreboard.json",
+        "type": 302
+      },
       {
-        "source": "/scoreboardState.json",
-        "headers": [
-          {
-            "key": "Access-Control-Allow-Origin",
-            "value": "*"
-          },
-          {
-            "key": "Cache-Control",
-            "value": "no-store"
-          }
-        ]
+        "source": "/scoreboardState-match2.json",
+        "destination": "https://bb-scoreboardnew-default-rtdb.asia-southeast1.firebasedatabase.app/matches/match2/liveScoreboard.json",
+        "type": 302
       }
     ]
   },

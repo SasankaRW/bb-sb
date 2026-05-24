@@ -12,22 +12,30 @@ This app now supports two isolated matches: `match1` and `match2`.
 - `src/scoreboard-display.html?match=match2`
 - `src/stream-overlay.html?match=match1`
 - `src/stream-overlay.html?match=match2`
-- `/scoreboardState.json?match=match1` (live JSON export, no `meta` field)
-- `/scoreboardState.json?match=match2`
+- `/scoreboardState.json` (match 1 live JSON, no `meta`)
+- `/scoreboardState-match2.json` (match 2 live JSON, no `meta`)
 
 ### Live JSON export
 
-`/scoreboardState.json` returns the current scoreboard as compact JSON and updates in real time via Firebase (same source as the displays). Use `?match=match1` or `?match=match2` (defaults to `match1`).
+The control panel mirrors public scoreboard data to `matches/{matchId}/liveScoreboard` in Realtime Database on every update. That node is real JSON (no HTML, no JavaScript).
 
-Example:
+**Match 1**
+
+- Hosted shortcut: `/scoreboardState.json`
+- Direct: `https://bb-scoreboardnew-default-rtdb.asia-southeast1.firebasedatabase.app/matches/match1/liveScoreboard.json`
+
+**Match 2**
+
+- Hosted shortcut: `/scoreboardState-match2.json`
+- Direct: `https://bb-scoreboardnew-default-rtdb.asia-southeast1.firebasedatabase.app/matches/match2/liveScoreboard.json`
+
+Poll either URL; each request returns the latest JSON body. Example:
 
 ```json
 {"awayFouls":5,"awayScore":70,"awayTeamName":"APEX","awayTimeouts":2,"ballPossession":"home","defaultAwayTeam":"AWAY","defaultGameMinutes":10,"defaultHomeTeam":"HOME","defaultQuarter":1,"defaultShotClock":24,"defaultTimeouts":2,"gameMilliseconds":0,"gameMinutes":10,"gameSeconds":0,"homeFouls":2,"homeScore":66,"homeTeamName":"CON","homeTimeouts":2,"isGameClockRunning":false,"isShotClockRunning":false,"quarter":3,"shotClockSeconds":24}
 ```
 
-Tools that poll an HTTP URL without running JavaScript can use the Firebase REST endpoint instead (includes `meta`):
-
-`https://bb-scoreboardnew-default-rtdb.asia-southeast1.firebasedatabase.app/matches/match1/scoreboardState.json`
+Deploy database rules and hosting after pulling these changes. Make at least one score change while signed in so `liveScoreboard` is populated.
 
 ### Firebase Authentication
 

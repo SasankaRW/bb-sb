@@ -14,6 +14,11 @@
           ".read": true,
           ".write": "auth != null && root.child('users').child(auth.uid).child('isActive').val() === true && root.child('users').child(auth.uid).child('assignedMatchId').val() === $matchId",
           ".validate": "newData.hasChildren(['homeScore', 'awayScore', 'homeFouls', 'awayFouls', 'homeTimeouts', 'awayTimeouts', 'homeTeamName', 'awayTeamName', 'quarter', 'gameMinutes', 'gameSeconds', 'gameMilliseconds', 'shotClockSeconds', 'isGameClockRunning', 'isShotClockRunning', 'ballPossession', 'defaultGameMinutes', 'defaultShotClock', 'defaultTimeouts', 'defaultQuarter', 'defaultHomeTeam', 'defaultAwayTeam', 'meta']) && newData.child('ballPossession').val().matches(/^(home|away)$/) && newData.child('meta').child('matchId').val() === $matchId"
+        },
+        "liveScoreboard": {
+          ".read": true,
+          ".write": "auth != null && root.child('users').child(auth.uid).child('isActive').val() === true && root.child('users').child(auth.uid).child('assignedMatchId').val() === $matchId",
+          ".validate": "newData.hasChildren(['homeScore', 'awayScore', 'homeFouls', 'awayFouls', 'homeTimeouts', 'awayTimeouts', 'homeTeamName', 'awayTeamName', 'quarter', 'gameMinutes', 'gameSeconds', 'gameMilliseconds', 'shotClockSeconds', 'isGameClockRunning', 'isShotClockRunning', 'ballPossession', 'defaultGameMinutes', 'defaultShotClock', 'defaultTimeouts', 'defaultQuarter', 'defaultHomeTeam', 'defaultAwayTeam']) && !newData.hasChild('meta') && newData.child('ballPossession').val().matches(/^(home|away)$/)"
         }
       }
     }
