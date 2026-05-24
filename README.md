@@ -37,6 +37,12 @@ Poll either URL; each request returns the latest JSON body. Example:
 
 Deploy database rules and hosting after pulling these changes. Make at least one score change while signed in so `liveScoreboard` is populated.
 
+### Vercel
+
+This repo includes `vercel.json` and `api/scoreboardState.js` so `/scoreboardState.json` works on Vercel (for example `https://bb-sb.vercel.app/scoreboardState.json`). The API route proxies Firebase `liveScoreboard` and returns raw JSON.
+
+If your Vercel project **Root Directory** is `src`, use the copies in `src/vercel.json` and `src/api/` (already included). Redeploy after pulling.
+
 ### Firebase Authentication
 
 Create Firebase Authentication email/password users for each operator.

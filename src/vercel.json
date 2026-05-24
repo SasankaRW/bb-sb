@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/scoreboardState.json",
+      "destination": "/api/scoreboardState"
+    },
+    {
+      "source": "/scoreboardState-match2.json",
+      "destination": "/api/scoreboardState?match=match2"
+    }
+  ]
+}
