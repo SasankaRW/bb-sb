@@ -637,12 +637,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function startGameClock() {
         return requireAuth(() => {
-            if (scoreboardState.isGameClockRunning || (scoreboardState.gameMinutes === 0 && scoreboardState.gameSeconds === 0)) {
+            scoreboardState.gameMilliseconds = Number(scoreboardState.gameMilliseconds) || 0;
+            const isClockAtZero = scoreboardState.gameMinutes === 0
+                && scoreboardState.gameSeconds === 0
+                && scoreboardState.gameMilliseconds === 0;
+            if (scoreboardState.isGameClockRunning || isClockAtZero) {
                 return;
-            }
-
-            if (scoreboardState.gameMinutes === 0 && scoreboardState.gameSeconds < 60 && scoreboardState.gameMilliseconds === 0) {
-                scoreboardState.gameMilliseconds = 900;
             }
 
             scoreboardState.isGameClockRunning = true;
