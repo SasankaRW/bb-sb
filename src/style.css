@@ -283,8 +283,12 @@ body.swap-layout .names-section .team-name.away {
     order: 1;
 }
 
-body.swap-layout .names-section .team-name.home {
+body.swap-layout .names-section .quarter-display {
     order: 2;
+}
+
+body.swap-layout .names-section .team-name.home {
+    order: 3;
 }
 
 body.swap-layout .main-section .score-container.away {
