@@ -70,6 +70,27 @@
             </div>
         </div>
 
+        <!-- Timeout takeover: covers the whole board while a timeout runs -->
+        <div class="timeout-overlay timeout-overlay--index" id="timeout-overlay" hidden>
+            <div class="timeout-overlay__timeout">
+                <div class="game-clock timeout-overlay__clock" id="timeout-clock">01:00</div>
+                <div class="timeout-overlay__label">TIMEOUT</div>
+            </div>
+            <div class="timeout-overlay__row">
+                <div class="timeout-overlay__team">
+                    <div class="timeout-overlay__name" id="timeout-home-name">HOME</div>
+                    <div class="timeout-overlay__score" id="timeout-home-score">00</div>
+                </div>
+                <div class="timeout-overlay__center">
+                    <div class="timeout-overlay__title" id="timeout-game-time">10:00</div>
+                </div>
+                <div class="timeout-overlay__team">
+                    <div class="timeout-overlay__name" id="timeout-away-name">AWAY</div>
+                    <div class="timeout-overlay__score" id="timeout-away-score">00</div>
+                </div>
+            </div>
+        </div>
+
         <!-- Hidden elements to preserve JS functionality without errors -->
         <div style="display: none;">
             <div id="home-timeouts">2</div>
@@ -126,10 +147,11 @@
                 <li><strong>Shift + J:</strong> Away Fouls -1</li>
                 <hr>
                 <h2>Timeouts</h2>
-                <li><strong>Z:</strong> Home Timeouts -1</li>
-                <li><strong>Shift + Z:</strong> Home Timeouts +1</li>
-                <li><strong>X:</strong> Away Timeouts -1</li>
+                <li><strong>Z:</strong> Home Timeout (-1, starts 60s countdown)</li>
+                <li><strong>Shift + Z:</strong> Close Timeout Overlay</li>
+                <li><strong>X:</strong> Away Timeout (-1, starts 60s countdown)</li>
                 <li><strong>Shift + X:</strong> Away Timeouts +1</li>
+                <li><strong>Shift + T:</strong> End Timeout Early</li>
                 <hr>
                 <h2>Quarter</h2>
                 <li><strong>Q:</strong> Quarter +1</li>

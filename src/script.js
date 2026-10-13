@@ -11,6 +11,7 @@ import {
 } from "./firebase-service.js";
 import {
     MATCH_IDS,
+    TIMEOUT_DURATION_SECONDS,
     buildMatchScopedUrl,
     buildLiveScoreboardPath,
     buildMatchStatePath,
@@ -21,6 +22,7 @@ import {
     clearCachedAssignedProfile,
     clearPendingSync,
     createDefaultScoreboardState,
+    formatGameClock,
     getMatchLabel,
     getRequestedMatchId,
     markPendingSync,
@@ -28,6 +30,7 @@ import {
     readCachedAssignedProfile,
     readCachedMatchState,
     readPendingSync,
+    renderTimeoutOverlay,
     stampState
 } from "./scoreboard-shared.js";
 
@@ -103,6 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let isSeedingMatchState = false;
     let gameTimerInterval = null;
     let shotClockTimerInterval = null;
+    let timeoutTimerInterval = null;
 
     function updateDocumentTitle() {
         document.title = `Basketball Scoreboard - ${getMatchLabel(activeMatchId)}`;
@@ -178,10 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (awayScoreEl) awayScoreEl.textContent = String(scoreboardState.awayScore).padStart(2, '0');
 
         if (gameClockEl) {
-            const timeString = scoreboardState.gameMinutes === 0 && scoreboardState.gameSeconds < 60
-                ? `${String(scoreboardState.gameSeconds).padStart(2, '0')}.${Math.floor(scoreboardState.gameMilliseconds / 100)}`
-                : `${String(scoreboardState.gameMinutes).padStart(2, '0')}:${String(scoreboardState.gameSeconds).padStart(2, '0')}`;
-            gameClockEl.innerHTML = wrapClockChars(timeString);
+            gameClockEl.innerHTML = wrapClockChars(formatGameClock(scoreboardState));
         }
 
         if (shotClockEl) shotClockEl.textContent = String(scoreboardState.shotClockSeconds).padStart(2, '0');
@@ -199,6 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateTeamName('away-team-name', scoreboardState.awayTeamName, 'away-possession-arrow');
         updateBallPossessionIndicator();
         updateFoulBonusStyling();
+        renderTimeoutOverlay(scoreboardState);
     }
 
     function showLoginStatus(message, type = 'info') {
@@ -346,8 +348,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function clearTimerIntervals() {
         clearInterval(gameTimerInterval);
         clearInterval(shotClockTimerInterval);
+        clearInterval(timeoutTimerInterval);
         gameTimerInterval = null;
         shotClockTimerInterval = null;
+        timeoutTimerInterval = null;
     }
 
     function stopTimersLocally() {
@@ -580,6 +584,37 @@ document.addEventListener('DOMContentLoaded', () => {
         if (scoreboardState.isShotClockRunning) {
             shotClockTimerInterval = setInterval(tickShotClock, 1000);
         }
+
+        if (scoreboardState.timeoutSecondsRemaining > 0) {
+            timeoutTimerInterval = setInterval(tickTimeout, 1000);
+        }
+    }
+
+    function tickTimeout() {
+        const remaining = Math.max(0, scoreboardState.timeoutSecondsRemaining - 1);
+        applyUpdates({ timeoutSecondsRemaining: remaining });
+
+        if (remaining === 0) {
+            clearInterval(timeoutTimerInterval);
+            timeoutTimerInterval = null;
+            const shotClockSound = document.getElementById('shotclock-sound');
+            if (shotClockSound) {
+                shotClockSound.currentTime = 0;
+                shotClockSound.play().catch(() => {});
+            }
+        }
+    }
+
+    function endTimeout() {
+        return requireAuth(() => {
+            if (scoreboardState.timeoutSecondsRemaining === 0) {
+                return;
+            }
+
+            clearInterval(timeoutTimerInterval);
+            timeoutTimerInterval = null;
+            applyUpdates({ timeoutSecondsRemaining: 0 });
+        });
     }
 
     function tickGameClock() {
@@ -646,6 +681,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             scoreboardState.isGameClockRunning = true;
+            if (scoreboardState.timeoutSecondsRemaining > 0) {
+                clearInterval(timeoutTimerInterval);
+                timeoutTimerInterval = null;
+                scoreboardState.timeoutSecondsRemaining = 0;
+            }
             syncRunningClockInterval();
             setControlInfo('Game Clock RUNNING');
             void persistScoreboardState(scoreboardState);
@@ -761,16 +801,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function adjustTimeouts(team, delta) {
         return requireAuth(() => {
-            if (team === 'home') {
-                scoreboardState.homeTimeouts = Math.max(0, Math.min(99, scoreboardState.homeTimeouts + delta));
-            } else {
-                scoreboardState.awayTimeouts = Math.max(0, Math.min(99, scoreboardState.awayTimeouts + delta));
-            }
+            const timeoutsKey = team === 'home' ? 'homeTimeouts' : 'awayTimeouts';
+            scoreboardState[timeoutsKey] = Math.max(0, Math.min(99, scoreboardState[timeoutsKey] + delta));
 
-            applyUpdates({
+            const updates = {
                 homeTimeouts: scoreboardState.homeTimeouts,
                 awayTimeouts: scoreboardState.awayTimeouts
-            });
+            };
+
+            if (delta < 0) {
+                // Start the timeout display even if the team's tracked total is already zero.
+                updates.timeoutSecondsRemaining = TIMEOUT_DURATION_SECONDS;
+                updates.isGameClockRunning = false;
+                updates.isShotClockRunning = false;
+            }
+
+            applyUpdates(updates);
+            syncTimersFromState();
         });
     }
 
@@ -1033,7 +1080,9 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault();
         }
 
-        if (event.code === 'KeyT') {
+        if (event.code === 'KeyT' && event.shiftKey) {
+            endTimeout();
+        } else if (event.code === 'KeyT') {
             if (scoreboardState.isGameClockRunning) {
                 void stopGameClock();
             } else {
@@ -1065,10 +1114,10 @@ document.addEventListener('DOMContentLoaded', () => {
             adjustFouls('away', 1);
         } else if (event.code === 'KeyJ' && event.shiftKey) {
             adjustFouls('away', -1);
-        } else if (event.code === 'KeyZ' && !event.shiftKey) {
-            adjustTimeouts('home', -1);
         } else if (event.code === 'KeyZ' && event.shiftKey) {
-            adjustTimeouts('home', 1);
+            endTimeout();
+        } else if (event.code === 'KeyZ') {
+            adjustTimeouts('home', -1);
         } else if (event.code === 'KeyX' && !event.shiftKey) {
             adjustTimeouts('away', -1);
         } else if (event.code === 'KeyX' && event.shiftKey) {

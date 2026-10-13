@@ -5,7 +5,8 @@ import {
     getMatchLabel,
     getRequestedMatchId,
     normalizeScoreboardState,
-    readCachedMatchState
+    readCachedMatchState,
+    renderTimeoutOverlay
 } from "./scoreboard-shared.js";
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -111,6 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateTeamName('away-team-name', scoreboardState.awayTeamName, 'away-possession-arrow');
         updateBallPossessionIndicator();
         updateFoulBonusStyling();
+        renderTimeoutOverlay(scoreboardState);
     }
 
     function mergeState(newState) {

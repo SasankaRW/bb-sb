@@ -19,9 +19,8 @@ const matchId = getRequestedMatchId();
 
 document.title = `Basketball Scoreboard - Stream Overlay - ${getMatchLabel(matchId)}`;
 
-// Listen to Firebase for real-time updates
-const stateRef = ref(db, buildMatchStatePath(matchId));
 let scoreboardState = normalizeScoreboardState({}, matchId);
+const stateRef = ref(db, buildMatchStatePath(matchId));
 
 // Helper function to format team names for two lines if two words
 function formatTeamName(name) {
@@ -33,6 +32,7 @@ function formatTeamName(name) {
     return name;
 }
 
+// Listen to Firebase for real-time updates
 onValue(stateRef, (snapshot) => {
     const data = snapshot.val();
 

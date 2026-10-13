@@ -1,5 +1,6 @@
 const MATCH_IDS = ['match1', 'match2'];
 const DEFAULT_MATCH_ID = 'match1';
+const TIMEOUT_DURATION_SECONDS = 60;
 
 const LOCAL_STORAGE_KEYS = {
     cachedProfile: 'scoreboardCachedProfile',
@@ -42,6 +43,7 @@ function createDefaultScoreboardState(matchId = DEFAULT_MATCH_ID) {
         shotClockSeconds: 12,
         isGameClockRunning: false,
         isShotClockRunning: false,
+        timeoutSecondsRemaining: 0,
         ballPossession: 'home',
         defaultGameMinutes: 10,
         defaultShotClock: 12,
@@ -82,6 +84,7 @@ function normalizeScoreboardState(rawState, matchId = DEFAULT_MATCH_ID) {
     mergedState.defaultShotClock = Math.max(1, Math.min(99, coerceNumber(mergedState.defaultShotClock, baseState.defaultShotClock)));
     mergedState.defaultTimeouts = Math.max(0, Math.min(99, coerceNumber(mergedState.defaultTimeouts, baseState.defaultTimeouts)));
     mergedState.defaultQuarter = Math.max(1, Math.min(10, coerceNumber(mergedState.defaultQuarter, baseState.defaultQuarter)));
+    mergedState.timeoutSecondsRemaining = Math.max(0, Math.min(TIMEOUT_DURATION_SECONDS, coerceNumber(mergedState.timeoutSecondsRemaining, 0)));
     mergedState.isGameClockRunning = Boolean(mergedState.isGameClockRunning);
     mergedState.isShotClockRunning = Boolean(mergedState.isShotClockRunning);
     mergedState.homeTeamName = String(mergedState.homeTeamName || baseState.homeTeamName).trim() || baseState.homeTeamName;
@@ -252,6 +255,51 @@ function readPendingSync(matchId) {
     };
 }
 
+function formatGameClock(state) {
+    return state.gameMinutes === 0 && state.gameSeconds < 60
+        ? `${String(state.gameSeconds).padStart(2, '0')}.${Math.floor(state.gameMilliseconds / 100)}`
+        : `${String(state.gameMinutes).padStart(2, '0')}:${String(state.gameSeconds).padStart(2, '0')}`;
+}
+
+function formatTimeoutClock(totalSeconds) {
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+}
+
+function renderTimeoutOverlay(state) {
+    const overlayEl = document.getElementById('timeout-overlay');
+    if (!overlayEl) {
+        return;
+    }
+
+    const isActive = state.timeoutSecondsRemaining > 0;
+    overlayEl.hidden = !isActive;
+    if (!isActive) {
+        return;
+    }
+
+    if (overlayEl.classList.contains('timeout-overlay--index')) {
+        const gameClockEl = document.getElementById('game-clock');
+        const timeoutClockContainer = overlayEl.querySelector('.timeout-overlay__timeout');
+        if (gameClockEl && timeoutClockContainer) {
+            timeoutClockContainer.style.top = `${gameClockEl.getBoundingClientRect().top - overlayEl.getBoundingClientRect().top}px`;
+        }
+    }
+
+    const setText = (id, text) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text;
+    };
+
+    setText('timeout-game-time', formatGameClock(state));
+    setText('timeout-home-name', state.homeTeamName);
+    setText('timeout-home-score', String(state.homeScore).padStart(2, '0'));
+    setText('timeout-away-name', state.awayTeamName);
+    setText('timeout-away-score', String(state.awayScore).padStart(2, '0'));
+    setText('timeout-clock', formatTimeoutClock(state.timeoutSecondsRemaining));
+}
+
 function clearPendingSync(matchId) {
     localStorage.removeItem(getPendingSyncKey(matchId));
 }
@@ -259,6 +307,7 @@ function clearPendingSync(matchId) {
 export {
     DEFAULT_MATCH_ID,
     MATCH_IDS,
+    TIMEOUT_DURATION_SECONDS,
     buildMatchScopedUrl,
     buildLiveScoreboardPath,
     buildMatchStatePath,
@@ -269,6 +318,7 @@ export {
     clearPendingSync,
     createDefaultScoreboardState,
     exportPublicScoreboardState,
+    formatGameClock,
     getMatchLabel,
     getRequestedMatchId,
     markPendingSync,
@@ -276,5 +326,6 @@ export {
     readCachedAssignedProfile,
     readCachedMatchState,
     readPendingSync,
+    renderTimeoutOverlay,
     stampState
 };
