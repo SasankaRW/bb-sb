@@ -578,6 +578,18 @@ body.swap-layout .fouls-section .foul-box.away {
     left: 2rem;
     width: calc(100% - 4rem);
 }
+/* Mirrored display: keep away team on the left during timeouts too */
+body.swap-layout .timeout-overlay__team:first-child {
+    order: 3;
+}
+
+body.swap-layout .timeout-overlay__center {
+    order: 2;
+}
+
+body.swap-layout .timeout-overlay__team:last-child {
+    order: 1;
+}
 
 
 /* --- Help Modal --- */
