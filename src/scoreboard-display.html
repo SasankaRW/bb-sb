@@ -60,16 +60,18 @@
         </div>
 
         <!-- Timeout takeover: covers the whole board while a timeout runs -->
-        <div class="timeout-overlay" id="timeout-overlay" hidden>
-            <div class="timeout-overlay__title" id="timeout-game-time">10:00</div>
+        <div class="timeout-overlay timeout-overlay--index" id="timeout-overlay" hidden>
+            <div class="timeout-overlay__timeout">
+                <div class="game-clock timeout-overlay__clock" id="timeout-clock">01:00</div>
+                <div class="timeout-overlay__label">TIMEOUT</div>
+            </div>
             <div class="timeout-overlay__row">
                 <div class="timeout-overlay__team">
                     <div class="timeout-overlay__name" id="timeout-home-name">HOME</div>
                     <div class="timeout-overlay__score" id="timeout-home-score">00</div>
                 </div>
                 <div class="timeout-overlay__center">
-                    <div class="timeout-overlay__label">TIMEOUT</div>
-                    <div class="timeout-overlay__clock" id="timeout-clock">01:00</div>
+                    <div class="timeout-overlay__title" id="timeout-game-time">10:00</div>
                 </div>
                 <div class="timeout-overlay__team">
                     <div class="timeout-overlay__name" id="timeout-away-name">AWAY</div>
