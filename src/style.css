@@ -102,7 +102,7 @@ body {
     align-items: center;
 
     font-family: 'Orbitron', monospace;
-    font-size: clamp(18rem, 40vh, 35rem);
+    font-size: min(36vh, 23vw);
     font-variant-numeric: tabular-nums;
     font-feature-settings: "tnum" 1;
     font-kerning: none;
@@ -171,7 +171,7 @@ body {
 .quarter-display {
     display: block;
     font-family: 'Orbitron', monospace;
-    font-size: clamp(3rem, 9vh, 6rem);
+    font-size: min(12vh, 9vw);
     font-weight: 700;
     line-height: 1;
     flex-shrink: 0;
@@ -194,9 +194,9 @@ body {
     padding: 0 4rem;
     flex: 1;
     box-sizing: border-box;
-    margin-top: 1rem;
+    margin-top: 0;
     /* Move names down */
-    margin-bottom: -2rem;
+    margin-bottom: 0;
     /* Move up without affecting scores */
 }
 
@@ -225,7 +225,7 @@ body {
 
 .team-name {
     font-family: 'Roboto', sans-serif;
-    font-size: clamp(6rem, 12vw, 12rem);
+    font-size: min(18vh, 12vw);
     font-weight: 900;
     color: #ffffff;
     text-transform: uppercase;
@@ -338,11 +338,12 @@ body.swap-layout .fouls-section .foul-box.away {
     /* Center vertically */
     width: 100%;
     flex: 3;
+    min-height: 0;
     /* Largest section */
     padding: 0 2rem;
     box-sizing: border-box;
-    margin-top: 2rem;
-    /* Move scores down */
+    margin-top: 0;
+    /* Tight against names */
 }
 
 .score-container {
@@ -356,7 +357,7 @@ body.swap-layout .fouls-section .foul-box.away {
 
 .score {
     font-family: 'Roboto', sans-serif;
-    font-size: clamp(14rem, 30vh, 24rem);
+    font-size: min(29vh, 14vw);
     /* Bigger numbers */
     font-weight: 900;
     /* Same as team names */
@@ -395,7 +396,7 @@ body.swap-layout .fouls-section .foul-box.away {
     /* Reduced gap for less clutter */
     width: 30%;
     align-items: center;
-    margin-top: 3rem;
+    margin-top: 0;
     /* Move fouls down */
 }
 
@@ -423,7 +424,7 @@ body.swap-layout .fouls-section .foul-box.away {
 
 .foul-value {
     font-family: 'Orbitron', monospace;
-    font-size: clamp(5rem, 10vw, 8rem);
+    font-size: min(11vh, 8vw);
     /* Larger numbers */
     color: #ffffff;
     /* Green LED */
@@ -880,7 +881,7 @@ body.swap-layout .fouls-section .foul-box.away {
     }
 
     .quarter-display {
-        font-size: clamp(2rem, 5vw, 3rem);
+        font-size: clamp(3.5rem, 8.5vw, 5.5rem);
     }
 
 }
@@ -953,7 +954,7 @@ body.swap-layout .fouls-section .foul-box.away {
     }
 
     .quarter-display {
-        font-size: clamp(3rem, 12vw, 5rem);
+        font-size: clamp(5rem, 19vw, 8.5rem);
         /* Larger font size for mobile */
         padding: 0.2em 0.4em;
     }
@@ -1003,7 +1004,7 @@ body.swap-layout .fouls-section .foul-box.away {
     }
 
     .quarter-display {
-        font-size: clamp(2.5rem, 10vw, 4rem);
+        font-size: clamp(4.5rem, 17vw, 7rem);
     }
 
     .team-name {
