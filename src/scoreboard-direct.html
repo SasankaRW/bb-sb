@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoreboard Display (Direct)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="scoreboard">
+        <!-- Top Section: Game Clock -->
+        <div class="header-section">
+            <div class="game-clock" id="game-clock">10:00</div>
+        </div>
+
+        <!-- Middle Section: Team Names (order swapped via CSS) -->
+        <div class="names-section">
+            <div class="team-name home" id="home-team-name">
+                HOME
+                <div class="possession-arrow" id="home-possession-arrow"></div>
+            </div>
+            <div class="quarter-display" id="quarter-display">Q1</div>
+            <div class="team-name away" id="away-team-name">
+                GUEST
+                <div class="possession-arrow" id="away-possession-arrow"></div>
+            </div>
+        </div>
+
+        <!-- Logo -->
+        <div class="logo-section">
+            <!--<img src="MLogo.png" class="quarter-logo" alt="Logo">-->
+        </div>
+
+        <!-- Scores & Fouls (order swapped via CSS) -->
+        <div class="main-section">
+            <!-- Home Score -->
+            <div class="score-container home">
+                <div class="score" id="home-score">00</div>
+            </div>
+
+            <!-- Center Fouls -->
+            <div class="fouls-section">
+                <div class="foul-box home">
+                    <div class="foul-label">FOULS</div>
+                    <div class="foul-value" id="home-fouls">0</div>
+                </div>
+                <div class="foul-box away">
+                    <div class="foul-label">FOULS</div>
+                    <div class="foul-value" id="away-fouls">0</div>
+                </div>
+            </div>
+
+            <!-- Away Score -->
+            <div class="score-container away">
+                <div class="score" id="away-score">00</div>
+            </div>
+        </div>
+
+        <!-- Timeout takeover: covers the whole board while a timeout runs -->
+        <div class="timeout-overlay timeout-overlay--index" id="timeout-overlay" hidden>
+            <div class="timeout-overlay__timeout">
+                <div class="game-clock timeout-overlay__clock" id="timeout-clock">01:00</div>
+                <div class="timeout-overlay__label">TIMEOUT</div>
+            </div>
+            <div class="timeout-overlay__row">
+                <div class="timeout-overlay__team">
+                    <div class="timeout-overlay__name" id="timeout-home-name">HOME</div>
+                    <div class="timeout-overlay__score" id="timeout-home-score">00</div>
+                </div>
+                <div class="timeout-overlay__center">
+                    <div class="timeout-overlay__title" id="timeout-game-time">10:00</div>
+                </div>
+                <div class="timeout-overlay__team">
+                    <div class="timeout-overlay__name" id="timeout-away-name">AWAY</div>
+                    <div class="timeout-overlay__score" id="timeout-away-score">00</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hidden elements to keep script functionality without controls -->
+        <div style="display: none;">
+            <div id="shot-clock">24</div>
+            <div id="home-timeouts">2</div>
+            <div id="away-timeouts">2</div>
+            <div id="controls-info"></div>
+        </div>
+    </div>
+
+    <audio id="shotclock-sound" src="ShotClockBuzzer.mp3" preload="auto"></audio>
+    <audio id="game-over-sound" src="gameOverSound.mp3" preload="auto"></audio>
+    <script type="module" src="display.js"></script>
+</body>
+
+</html>

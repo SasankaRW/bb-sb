@@ -10,6 +10,8 @@ This app now supports two isolated matches: `match1` and `match2`.
 - `src/index.html?match=match2`
 - `src/scoreboard-display.html?match=match1`
 - `src/scoreboard-display.html?match=match2`
+- `src/scoreboard-direct.html?match=match1` (same as the display page, not mirrored, no controls)
+- `src/scoreboard-direct.html?match=match2`
 - `src/stream-overlay.html?match=match1`
 - `src/stream-overlay.html?match=match2`
 - `/scoreboardState.json` (match 1 live JSON, no `meta`)

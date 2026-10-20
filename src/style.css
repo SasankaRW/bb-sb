@@ -102,7 +102,7 @@ body {
     align-items: center;
 
     font-family: 'Orbitron', monospace;
-    font-size: min(36vh, 23vw);
+    font-size: min(40vh, 25vw);
     font-variant-numeric: tabular-nums;
     font-feature-settings: "tnum" 1;
     font-kerning: none;
@@ -171,18 +171,18 @@ body {
 .quarter-display {
     display: block;
     font-family: 'Orbitron', monospace;
-    font-size: min(12vh, 9vw);
+    font-size: min(16vh, 8vw);
     font-weight: 700;
     line-height: 1;
     flex-shrink: 0;
-    color: #ffffff;
+    color: #f1c40f;
     background-color: #222;
-    padding: 0.5rem 1.5rem;
+    padding: 0.2rem 0.8rem;
     border-radius: 10px;
     border: 2px solid #444;
     text-align: center;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
-    min-width: 3em;
+    min-width: 2.2em;
 }
 
 /* --- Names Section --- */
@@ -191,7 +191,7 @@ body {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 0 4rem;
+    padding: 0 2rem;
     flex: 1;
     box-sizing: border-box;
     margin-top: 0;
@@ -225,7 +225,7 @@ body {
 
 .team-name {
     font-family: 'Roboto', sans-serif;
-    font-size: min(18vh, 12vw);
+    font-size: min(18vh, 9vw);
     font-weight: 900;
     color: #ffffff;
     text-transform: uppercase;
@@ -357,7 +357,7 @@ body.swap-layout .fouls-section .foul-box.away {
 
 .score {
     font-family: 'Roboto', sans-serif;
-    font-size: min(29vh, 14vw);
+    font-size: min(33vh, 15vw);
     /* Bigger numbers */
     font-weight: 900;
     /* Same as team names */
@@ -392,7 +392,7 @@ body.swap-layout .fouls-section .foul-box.away {
 .fouls-section {
     display: flex;
     justify-content: center;
-    gap: 2rem;
+    gap: min(2rem, 1.5vw);
     /* Reduced gap for less clutter */
     width: 30%;
     align-items: center;
@@ -405,7 +405,7 @@ body.swap-layout .fouls-section .foul-box.away {
     flex-direction: column;
     align-items: center;
     background-color: #111;
-    padding: 1.5rem 3rem;
+    padding: 1.5rem min(3rem, 2vw);
     /* Larger box */
     border-radius: 15px;
     border: 1px solid #333;
@@ -413,7 +413,7 @@ body.swap-layout .fouls-section .foul-box.away {
 
 .foul-label {
     font-family: 'Roboto', sans-serif;
-    font-size: 1.8rem;
+    font-size: min(1.8rem, 2.4vw);
     /* Larger label */
     font-weight: 700;
     color: #aaa;
