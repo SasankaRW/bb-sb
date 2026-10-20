@@ -184,6 +184,10 @@ body {
     text-align: center;
 }
 
+.quarter.overtime {
+    color: #f87171;
+}
+
 .time:hover {
     transform: none;
 }

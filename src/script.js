@@ -187,6 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (shotClockEl) shotClockEl.textContent = String(scoreboardState.shotClockSeconds).padStart(2, '0');
         if (quarterEl) {
+            quarterEl.classList.toggle('overtime', scoreboardState.quarter > 4);
             quarterEl.textContent = scoreboardState.quarter <= 4
                 ? `Q${scoreboardState.quarter}`
                 : `OT${scoreboardState.quarter - 4}`;

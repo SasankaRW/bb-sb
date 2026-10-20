@@ -185,6 +185,11 @@ body {
     min-width: 2.2em;
 }
 
+.quarter-display.overtime {
+    color: #ef4444;
+    border-color: #ef4444;
+}
+
 /* --- Names Section --- */
 .names-section {
     display: flex;

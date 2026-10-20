@@ -58,6 +58,7 @@ onValue(stateRef, (snapshot) => {
         // Update quarter
         if (streamQuarterEl) {
             const quarter = scoreboardState.quarter;
+            streamQuarterEl.classList.toggle('overtime', quarter > 4);
             if (quarter <= 4) {
                 streamQuarterEl.textContent = `Q${quarter}`;
             } else {
@@ -80,6 +81,7 @@ if (cachedState?.state) {
         streamGameTimeEl.textContent = `${minutes}:${seconds}`;
     }
     if (streamQuarterEl) {
+        streamQuarterEl.classList.toggle('overtime', scoreboardState.quarter > 4);
         streamQuarterEl.textContent = scoreboardState.quarter <= 4
             ? `Q${scoreboardState.quarter}`
             : `OT${scoreboardState.quarter - 4}`;
